@@ -31,7 +31,9 @@ end
 
 get '/' do
   @meetups = Meetup.order('name')
-  @reserved_meetups = Reservation.where("user_id = ?", current_user.id)
+  if signed_in?
+    @my_meetups = current_user.meetups
+  end
   erb :index
 end
 
@@ -73,8 +75,14 @@ get '/example_protected_page' do
   authenticate!
 end
 
-post "/:meetup_id/reserve" do
+post "/:meetup_id/join" do
   Reservation.create(user_id: current_user.id, meetup_id: params[:meetup_id])
-  flash[:notice] = "Awesome, you just reserved a spot. See you soon!"
+  flash[:notice] = "Awesome, you just joined that meetup. See you soon!"
+  redirect "/"
+end
+
+post "/:reservation_id/cancel" do
+  Reservation.destroy(params[:reservation_id])
+  flash[:notice] = "Sad to see you go!"
   redirect "/"
 end
