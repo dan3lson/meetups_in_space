@@ -122,3 +122,6 @@ DEPENDENCIES
   sinatra-activerecord
   sinatra-contrib
   sinatra-flash
+
+BUNDLED WITH
+   1.10.3

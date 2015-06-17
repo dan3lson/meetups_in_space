@@ -1,1 +1,35 @@
-<h1><%= @title %></h1>
+<div class="row">
+  <div class="small-6 column">
+    <h1>
+      All Meetups
+      <% if signed_in? %>
+        <span class="new_button">
+          <a href="/new">+</a>
+        </span>
+      <% end %>
+    </h1>
+    <% @meetups.each do |meetup| %>
+      <h3>
+        <a href="/<%= meetup.id %>/show">
+          <%= meetup.name %>
+        </a>
+          <small>
+            (<%= meetup.location %>)
+          </small>
+        <form action="/<%= meetup.id %>/reserve" method="post">
+          <span class="new_button">
+            <a href="/<%= meetup.id %>/reserve">&#9996;</a>
+          </span>
+          <input type="submit" value="Join!" />
+        </form>
+      </h3>
+      <%= meetup.description %>
+      <hr />
+    <% end %>
+  </div>
+  <div class="small-6 column">
+    <h1>
+      Reservered Meetups
+    </h1>
+  </div>
+</div>
